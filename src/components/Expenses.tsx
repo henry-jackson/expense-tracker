@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import ExpenseItemStyled from "./ExpenseItem"
+import ExpensesFilterStyled from "./ExpenseFilter"
 
 interface ExpensesProps {
   className?: string
@@ -22,7 +23,15 @@ function Expenses({ className, expenseData }: ExpensesProps) {
       key={expense.id}
     />
   ))
-  return <div className={className}>{expenseItems}</div>
+  function filterSelectHandler() {
+    console.log("bab")
+  }
+  return (
+    <div className={className}>
+      <ExpensesFilterStyled onFilterSelect={filterSelectHandler} />
+      {expenseItems}
+    </div>
+  )
 }
 
 const ExpensesStyled = styled(Expenses)`
