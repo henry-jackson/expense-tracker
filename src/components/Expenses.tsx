@@ -1,10 +1,11 @@
 import styled from "styled-components"
+import { useState } from "react"
 import ExpenseItemStyled from "./ExpenseItem"
 import ExpensesFilterStyled from "./ExpenseFilter"
 
 interface ExpensesProps {
   className?: string
-  expenseData: Array<DataProvider>
+  expenseData: DataProvider[]
 }
 
 interface DataProvider {
@@ -15,21 +16,36 @@ interface DataProvider {
 }
 
 function Expenses({ className, expenseData }: ExpensesProps) {
-  const expenseItems = expenseData.map((expense) => (
-    <ExpenseItemStyled
-      date={expense.date}
-      title={expense.title}
-      amount={expense.amount}
-      key={expense.id}
-    />
-  ))
-  function filterSelectHandler() {
-    console.log("bab")
+  function createItemsFromData(expenseData: DataProvider[]) {
+    return expenseData.map((expense) => (
+      <ExpenseItemStyled
+        date={expense.date}
+        title={expense.title}
+        amount={expense.amount}
+        key={expense.id}
+      />
+    ))
+  }
+
+  const allItems = createItemsFromData(expenseData)
+  const [items, setItems] = useState(allItems)
+  function filterSelectHandler(filterValue: string) {
+    if (filterValue === "all") {
+      setItems(allItems)
+      return
+    }
+    setItems(
+      createItemsFromData(
+        expenseData.filter(
+          (item) => parseInt(filterValue) === item.date.getFullYear()
+        )
+      )
+    )
   }
   return (
     <div className={className}>
       <ExpensesFilterStyled onFilterSelect={filterSelectHandler} />
-      {expenseItems}
+      {items}
     </div>
   )
 }

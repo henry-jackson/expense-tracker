@@ -1,31 +1,40 @@
 import styled from "styled-components"
 import { useState } from "react"
-import Select from "react-select"
+import Select, { ValueType } from "react-select"
 
 interface ExpensesFilterProps {
   className?: string
   onFilterSelect: Function
 }
 
-type FilterOption = {
+type YearOption = {
   label: string
   value: string
 }
 
-function ExpensesFilter({ className }: ExpensesFilterProps) {
-  const [selectedFilter, setSelectedFilter] = useState("")
+function ExpensesFilter({ className, onFilterSelect }: ExpensesFilterProps) {
+  const [selectedFilter, setSelectedFilter] = useState("none")
+  const options: YearOption[] = [
+    { value: "all", label: "None" },
+    { value: "2021", label: "2021" },
+    { value: "2020", label: "2020" },
+    { value: "2018", label: "2019" },
+    { value: "2019", label: "2018" },
+  ]
+  function changeHandler(option: YearOption) {
+    const selection: string = option.value
+    onFilterSelect(selection)
+    setSelectedFilter(selection)
+  }
   return (
     <div className={className}>
       <Controls>
         <Label>Filter by year</Label>
-        <Select
-          onChange={(selection: FilterOption) => setSelectedFilter(selection.value)}
-        >
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-        </Select>
+        <SelectStyled
+          defaultValue={selectedFilter}
+          onChange={(option: YearOption) => changeHandler(option)}
+          options={options}
+        />
       </Controls>
     </div>
   )
@@ -47,13 +56,16 @@ const Controls = styled.div`
 const Label = styled.label`
   font-weight: bold;
   margin-bottom: 0.5rem;
+  flex: 3;
 `
 
 const SelectStyled = styled(Select)`
   font: inherit;
+  color: black;
   padding: 0.5rem 3rem;
   font-weight: bold;
   border-radius: 6px;
+  flex: 1;
 `
 
 export default ExpensesFilterStyled
