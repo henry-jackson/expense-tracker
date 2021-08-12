@@ -2,7 +2,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import ExpenseDateStyled from "./ExpenseDate"
 
-interface ExpenseItemProps {
+export interface ExpenseItemProps {
   className?: string
   date: Date
   title: string
@@ -10,23 +10,16 @@ interface ExpenseItemProps {
   key: string
 }
 
-function ExpenseItem({ className, date, title, amount }: ExpenseItemProps) {
+function ExpenseItem({ className, date, title, amount, key }: ExpenseItemProps) {
   const [defaultTitle, setTitle] = useState(title)
 
-  // function clickHandler(newTitle: string) {
-  function clickHandler() {
-    // setTitle(newTitle)
-    setTitle("test")
-  }
-
   return (
-    <div className={className}>
+    <div key={key} className={className}>
       <ExpenseDateStyled date={date} />
       <Description>
         <Title>{defaultTitle}</Title>
         <Price>{`$${amount}`}</Price>
       </Description>
-      <button onClick={clickHandler}>Change Title</button>
     </div>
   )
 }

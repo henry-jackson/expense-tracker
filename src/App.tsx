@@ -1,7 +1,9 @@
 import ReactDOM from "react-dom"
+import { useState } from "react"
 import "./App.css"
 import Expenses from "./components/Expenses"
 import NewExpenseStyled from "./components/NewExpense"
+import { ExpenseItemProps } from "./components/ExpenseItem"
 
 function App() {
   const expenses = [
@@ -26,14 +28,30 @@ function App() {
     },
   ]
 
-  function addExpenseHandler(expense: Object) {
-    console.log("tes")
+  const [currentExpenses, setExpenses] = useState(expenses)
+
+  function addExpenseHandler(expense: ExpenseItemProps) {
+    setExpenses((oldExpenses) => [
+      ...oldExpenses,
+      {
+        id: expense.key,
+        title: expense.title,
+        amount: expense.amount,
+        date: expense.date,
+      },
+    ])
   }
 
   return (
     <div className="App">
       <NewExpenseStyled onAddExpense={addExpenseHandler} />
-      <Expenses expenseData={expenses} />
+      <Expenses
+        key={currentExpenses
+          .map((x) => x.id)
+          .sort()
+          .join()}
+        expenseData={currentExpenses}
+      />
     </div>
   )
 }
