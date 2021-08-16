@@ -13,26 +13,19 @@ type YearOption = {
 }
 
 function ExpensesFilter({ className, onFilterSelect }: ExpensesFilterProps) {
-  const defaultOption: YearOption = { value: "all", label: "None" }
-  const [selectedFilter, setSelectedFilter] = useState(defaultOption)
   const options: YearOption[] = [
-    defaultOption,
+    { value: "all", label: "All" },
     { value: "2021", label: "2021" },
     { value: "2020", label: "2020" },
     { value: "2018", label: "2019" },
     { value: "2019", label: "2018" },
   ]
-  function changeHandler(option: YearOption) {
-    onFilterSelect(option.value)
-    setSelectedFilter(option)
-  }
   return (
     <div className={className}>
       <Controls>
         <Label>Filter by year</Label>
         <SelectStyled
-          value={selectedFilter}
-          onChange={(option: YearOption) => changeHandler(option)}
+          onChange={(option: YearOption) => onFilterSelect(option.value)}
           options={options}
         />
       </Controls>

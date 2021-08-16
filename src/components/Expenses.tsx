@@ -6,7 +6,6 @@ import ExpensesFilterStyled from "./ExpenseFilter"
 interface ExpensesProps {
   className?: string
   expenseData: DataProvider[]
-  key: string
 }
 
 interface DataProvider {
@@ -17,35 +16,31 @@ interface DataProvider {
 }
 
 function Expenses({ className, expenseData }: ExpensesProps) {
-  function createItemsFromData(data: DataProvider[]) {
-    return data.map((expense) => (
-      <ExpenseItemStyled
-        date={expense.date}
-        title={expense.title}
-        amount={expense.amount}
-        key={expense.id}
-      />
-    ))
+  const [filterValue, setFilteredYear] = useState("all")
+
+  const filterSelectHandler = (filter: string) => {
+    setFilteredYear(filter)
   }
 
-  const allItems = createItemsFromData(expenseData)
-  const [items, setItems] = useState(allItems)
-
-  function filterSelectHandler(filterValue: string) {
-    filterValue === "all"
-      ? setItems(allItems)
-      : setItems(
-          createItemsFromData(
-            expenseData.filter(
-              (item) => parseInt(filterValue) === item.date.getFullYear()
-            )
-          )
+  const filteredExpenses = (filterValue: string) => {
+    return filterValue === "all"
+      ? expenseData
+      : expenseData.filter(
+          (item) => parseInt(filterValue) === item.date.getFullYear()
         )
   }
+
   return (
     <div className={className}>
       <ExpensesFilterStyled onFilterSelect={filterSelectHandler} />
-      {items}
+      {filteredExpenses(filterValue).map((expense) => (
+        <ExpenseItemStyled
+          key={expense.id}
+          date={expense.date}
+          title={expense.title}
+          amount={expense.amount}
+        />
+      ))}
     </div>
   )
 }
