@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom"
 import { useState } from "react"
 import "./App.css"
-import Expenses from "./components/Expenses"
-import NewExpenseStyled from "./components/NewExpense"
-import { ExpenseItemProps } from "./components/ExpenseItem"
+import Expenses from "./components/Expenses/Expenses"
+import NewExpenseStyled from "./components/NewExpense/NewExpense"
+import { ExpenseItemProps } from "./components/Expense/ExpenseItem"
 
 const expenses = [
   {
@@ -33,7 +33,7 @@ function App() {
   function addExpenseHandler(expense: ExpenseItemProps) {
     setExpenses((oldExpenses) => [
       {
-        id: expense.key,
+        id: expense.id,
         title: expense.title,
         amount: expense.amount,
         date: expense.date,

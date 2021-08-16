@@ -1,18 +1,12 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
-import ExpenseItemStyled from "./ExpenseItem"
+import { ExpenseItemProps } from "../Expense/ExpenseItem"
 import ExpensesFilterStyled from "./ExpenseFilter"
+import ExpensesList from "./ExpensesList"
 
 interface ExpensesProps {
   className?: string
-  expenseData: DataProvider[]
-}
-
-interface DataProvider {
-  date: Date
-  title: string
-  amount: number
-  id: string
+  expenseData: ExpenseItemProps[]
 }
 
 function Expenses({ className, expenseData }: ExpensesProps) {
@@ -29,20 +23,10 @@ function Expenses({ className, expenseData }: ExpensesProps) {
           (item) => parseInt(filterValue) === item.date.getFullYear()
         )
 
-  const expensesContent = filteredExpenses.map((expense) => (
-    <ExpenseItemStyled
-      key={expense.id}
-      date={expense.date}
-      title={expense.title}
-      amount={expense.amount}
-    />
-  ))
-
   return (
     <div className={className}>
       <ExpensesFilterStyled onFilterSelect={filterSelectHandler} />
-      {filteredExpenses.length === 0 && <p>No expenses found.</p>}
-      {filteredExpenses.length > 0 && expensesContent}
+      <ExpensesList items={filteredExpenses} />
     </div>
   )
 }

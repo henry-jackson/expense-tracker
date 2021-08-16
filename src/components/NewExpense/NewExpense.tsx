@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import ExpenseFormStyled, { FormValues } from "./ExpenseForm"
-import { ExpenseItemProps } from "./ExpenseItem"
+import { ExpenseItemProps } from "../Expense/ExpenseItem"
 
 interface NewExpenseProps {
   className?: string
@@ -11,7 +11,7 @@ function NewExpense({ className, onAddExpense }: NewExpenseProps) {
   function saveExpenseDataHandler(enteredExpenseData: FormValues) {
     const itemProps: ExpenseItemProps = {
       ...enteredExpenseData,
-      key: Math.random().toString(),
+      id: Math.random().toString(),
     }
     onAddExpense(itemProps)
   }

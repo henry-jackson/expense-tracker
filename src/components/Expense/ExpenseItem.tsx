@@ -7,14 +7,14 @@ export interface ExpenseItemProps {
   date: Date
   title: string
   amount: number
-  key: string
+  id: string
 }
 
-function ExpenseItem({ className, date, title, amount, key }: ExpenseItemProps) {
+function ExpenseItem({ className, date, title, amount, id }: ExpenseItemProps) {
   const [defaultTitle, setTitle] = useState(title)
 
   return (
-    <div key={key} className={className}>
+    <div key={id} className={className}>
       <ExpenseDateStyled date={date} />
       <Description>
         <Title>{defaultTitle}</Title>
@@ -63,6 +63,7 @@ const Title = styled.h2`
     font-size: 1.25rem;
   }
 `
+
 const Price = styled.div`
   font-size: 1rem;
   font-weight: bold;
