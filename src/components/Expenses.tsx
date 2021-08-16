@@ -22,25 +22,27 @@ function Expenses({ className, expenseData }: ExpensesProps) {
     setFilteredYear(filter)
   }
 
-  const filteredExpenses = (filterValue: string) => {
-    return filterValue === "all"
+  const filteredExpenses =
+    filterValue === "all"
       ? expenseData
       : expenseData.filter(
           (item) => parseInt(filterValue) === item.date.getFullYear()
         )
-  }
+
+  const expensesContent = filteredExpenses.map((expense) => (
+    <ExpenseItemStyled
+      key={expense.id}
+      date={expense.date}
+      title={expense.title}
+      amount={expense.amount}
+    />
+  ))
 
   return (
     <div className={className}>
       <ExpensesFilterStyled onFilterSelect={filterSelectHandler} />
-      {filteredExpenses(filterValue).map((expense) => (
-        <ExpenseItemStyled
-          key={expense.id}
-          date={expense.date}
-          title={expense.title}
-          amount={expense.amount}
-        />
-      ))}
+      {filteredExpenses.length === 0 && <p>No expenses found.</p>}
+      {filteredExpenses.length > 0 && expensesContent}
     </div>
   )
 }
