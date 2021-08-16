@@ -2,11 +2,10 @@ import ExpenseItemStyled, { ExpenseItemProps } from "../Expense/ExpenseItem"
 import styled from "styled-components"
 
 interface ExpensesListProps {
-  className?: string
   items: ExpenseItemProps[]
 }
 
-function ExpensesList({ className, items }: ExpensesListProps) {
+function ExpensesList({ items }: ExpensesListProps) {
   if (items.length === 0) {
     return <Fallback>No expenses found</Fallback>
   }

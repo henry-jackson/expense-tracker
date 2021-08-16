@@ -11,16 +11,14 @@ export interface ExpenseItemProps {
 }
 
 function ExpenseItem({ className, date, title, amount, id }: ExpenseItemProps) {
-  const [defaultTitle, setTitle] = useState(title)
-
   return (
-    <div key={id} className={className}>
+    <li key={id} className={className}>
       <ExpenseDateStyled date={date} />
       <Description>
-        <Title>{defaultTitle}</Title>
+        <Title>{title}</Title>
         <Price>{`$${amount}`}</Price>
       </Description>
-    </div>
+    </li>
   )
 }
 
