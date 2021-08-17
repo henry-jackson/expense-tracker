@@ -5,6 +5,7 @@ import moment from "moment"
 interface ExpenseFormProps {
   className?: string
   onSaveExpenseData: Function
+  onCancelButtonClick: Function
 }
 
 export type FormValues = {
@@ -13,7 +14,11 @@ export type FormValues = {
   date: Date
 }
 
-function ExpenseForm({ className, onSaveExpenseData }: ExpenseFormProps) {
+function ExpenseForm({
+  className,
+  onSaveExpenseData,
+  onCancelButtonClick,
+}: ExpenseFormProps) {
   const { register, handleSubmit, reset } = useForm<FormValues>()
   function submitHandler(data: FormValues) {
     onSaveExpenseData(data)
@@ -42,12 +47,15 @@ function ExpenseForm({ className, onSaveExpenseData }: ExpenseFormProps) {
             {...register("date", { required: true, valueAsDate: true })}
             type="date"
             defaultValue={moment().format("YYYY-MM-DD")}
-            min="2019-01-01"
+            min="2010-01-01"
             max="2022-12-31"
           />
         </div>
       </Controls>
       <Actions>
+        <ActionsButton onClick={() => onCancelButtonClick()} type="reset">
+          Cancel
+        </ActionsButton>
         <ActionsButton type="submit">Add Expense</ActionsButton>
       </Actions>
     </form>
@@ -99,20 +107,5 @@ const ActionsButton = styled.button`
     border-color: #510674;
   }
 `
-/* TODO
- *
-
-.new-expense button.alternative {
-  color: #220131;
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.new-expense button.alternative:hover,
-.new-expense button.alternative:active {
-  background-color: #ddb3f8;
-}
-
-    */
 
 export default ExpenseFormStyled
